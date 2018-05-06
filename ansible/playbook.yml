@@ -1,0 +1,68 @@
+---
+- name: Testando o ansible 
+  hosts: "{{ hosts }}"
+  tasks: 
+  - name: verificando o hostname 
+    command: hostname
+
+  - name: Verificando o uptime
+    command: uptime
+
+  - name: Verificando a memoria
+    command: free -m
+
+
+  - name: Verificando o espaco em disco
+    command: df -h 
+
+#  - name: Instalando o pacote SL 
+#    package: 
+#     name: sl 
+#     state: present 
+#     update_cache: yes
+
+
+#  - name: Instaland o o pacte cowsay
+#    package: 
+#     name: cowsay
+#     state: present 
+
+  - name: Adicionando informacao na variavel path 
+    lineinfile: 
+     path: /etc/profile
+     line: "export PATH=$PATH:/usr/games"
+     state: absent
+
+
+
+  - name: Adicionando hosts
+    lineinfile: 
+      path: /etc/hosts
+      line: "{{ item }}"
+    with_items:
+      - "10.100.0.176 ubuntu1.salas4linux.com.br ubuntu1"
+      - "10.100.0.205 ubuntu2.salas4linux.com.br ubuntu2"
+      - "10.100.0.218 dev1.salas4linux.com.br dev1"
+      - "10.100.0.137 dev2.salas4linux.com.br dev2"
+
+  - name: Adicionando bashrc 
+    copy: 
+     src: files/bashrc
+     dest: /root/.bashrc 
+
+
+  - name: Instalando nginx 
+    package:
+     name: nginx 
+     state: present
+    notify: restart nginx  
+
+  handlers:
+  - name: restart nginx 
+    service: 
+     name: nginx 
+     state: restarted 
+
+
+
+

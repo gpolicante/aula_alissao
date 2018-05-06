@@ -1,0 +1,10 @@
+- name: Copiando site 
+  template: 
+    src: ../templates/index.html
+    dest: /var/www/html/index.html
+
+- name: Baixando imagem 
+  get_url:
+   url: http://sm.ign.com/ign_br/screenshot/default/rick-and-morty-season-4-dan-harmon_7tsm.jpg
+   dest: /var/www/html/ricky.jpg
+   mode: 0666

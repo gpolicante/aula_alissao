@@ -1,0 +1,16 @@
+- name: Install Apache2 
+  apt: 
+   name: apache2 
+   state: present 
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+
+- name: start Apache2 
+  service: 
+   name: apache2 
+   state: restarted 
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+   
+
+
+

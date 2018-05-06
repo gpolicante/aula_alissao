@@ -1,0 +1,4 @@
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+figlet JORGE E O COELHO FODA 

@@ -1,0 +1,11 @@
+---
+# tasks file for apache
+- name: Role install apache2 
+  hosts: dev
+  vars:
+   - texto: "nao tem"
+  tasks: 
+  - include: prerequisitos.yml 
+  - include: install_apache.yml
+  - include: install_httpd.yml 
+  - include: deploy.yml

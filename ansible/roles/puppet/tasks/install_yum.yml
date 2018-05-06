@@ -1,0 +1,11 @@
+- name: Download puppet centOS repo
+  yum: 
+   name: https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
+   state: present
+  when: ansible_distribution == 'CentOS' 
+
+- name: Install puppet agent
+  yum: 
+   name: puppet-agent
+   state: present
+  when: ansible_distribution == 'CentOS'   

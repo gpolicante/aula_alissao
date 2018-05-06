@@ -1,0 +1,9 @@
+---
+# tasks file for puppet
+- name: Install all puppet 5.5 
+  hosts: all 
+  tasks: 
+   - include: install_deb.yml
+     when: ansible_distribution == "Ubuntu"
+   - include: install_yum.yml 
+     when: ansible_distribution == "CentOS"

@@ -1,0 +1,55 @@
+---
+- name: Playbook para debian
+  hosts: all
+  tasks: 
+  - name: removendo nginx 
+    package: 
+     name: nginx 
+     state: absent 
+
+  - name: instalando pacotes apache, libapache2-mod-php7.0 e php7.0
+    yum: 
+     name: "{{ item }}"
+     state: present
+    with_items:  
+     - "httpd"
+     - "php"
+    notify: restart httpd
+    when: ansible_distribution == "CentOS"
+
+  - name: instalando pacotes apache, php etc...
+    apt:
+     name: "{{ item }}"
+    with_items:
+     - "apache2"
+     - "php7.0"
+    when: ansible_distribution == "Ubuntu"
+
+  - name: executando o a2enmod do php 
+    command: a2enmod php7.0
+    when: ansible_distribution == "Ubuntu" 
+    notify: 
+     - parando nginx 
+     - restart apache
+
+  - name: copiando index.php 
+    copy: 
+     src: files/index.php
+     dest: /var/www/html/
+
+  handlers: 
+     
+   - name: parando nginx
+     service: 
+      name: nginx
+      state: stopped
+  
+   - name: restart apache
+     service: 
+      name: apache2
+      state:  restarted
+
+   - name: restart httpd
+     service: 
+      name: httpd
+      state: restarted

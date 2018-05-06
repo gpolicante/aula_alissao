@@ -1,0 +1,11 @@
+- name: Install httpd 
+  yum: 
+   name: httpd
+   state: present 
+  when: ansible_distribution == "CentOS" 
+
+- name: start httpd 
+  service: 
+   name: httpd 
+   state: restarted
+  when: ansible_distribution == "CentOS" 
